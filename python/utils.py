@@ -25,7 +25,7 @@ import numpy as np
 def frame_pilot_value_and_position(N_rb_dl, cell_id, Ncp, p):
     rs_pos_frame = []
     rs_val_frame = []
-    Ndlsymb = 7;
+    Ndlsymb = 7
     for ns in range(20):
         sym1 = symbol_pilot_value_and_position(N_rb_dl, ns, 1, cell_id, Ncp, p)
         if p == 0 or p == 1:
@@ -79,7 +79,7 @@ def pn_generator(vector_len, cinit):
 
 def calc_offset(ns, l, cell_id, p):
     v = calc_v(ns, l, p)
-    return ( v + (cell_id % 6) ) % 6
+    return (v + (cell_id % 6)) % 6
 
 
 def calc_v(ns, l, p):
@@ -99,6 +99,8 @@ def calc_v(ns, l, p):
     return v
 
 
+# Encoding Non Return To Zero
+# http://www.rfwireless-world.com/Terminology/RZ-vs-NRZ-vs-manchester-code.html
 def encode_nrz(data):
     out_data = range(len(data))
     for i in range(len(data)):
@@ -106,6 +108,8 @@ def encode_nrz(data):
     return out_data
 
 
+# Pseudo Noise Sequence
+# http://www.globalspec.com/reference/68074/203279/9-1-pn-sequence
 def generate_pn_sequence(vector_len, cinit):
     NC = 1600
     vec_len = vector_len
@@ -126,11 +130,14 @@ def generate_pn_sequence(vector_len, cinit):
     return output
 
 
+# Get cinit and use pseudorandom noise generator on it?
 def get_pcfich_scrambling_sequence(cell_id, ns):
     cinit = get_pcfich_cinit(ns, cell_id)
     return pn_generator(32, cinit)
 
 
+# Scrambling Init
+# https://de.mathworks.com/help/lte/ug/control-format-indicator-cfi-channel.html#bt1nto4
 def get_pcfich_cinit(ns, cell_id):
     return int((math.floor(ns / 2) + 1) * (2 * cell_id + 1) * (2 ** 9) + cell_id)
 
@@ -143,6 +150,7 @@ def main():
 
     [pilot_pos, pilot_vals] = frame_pilot_value_and_position(N_rb_dl, cell_id, Ncp, ant)
     print pilot_pos
+
 
 if __name__ == "__main__":
     main()
