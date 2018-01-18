@@ -142,6 +142,21 @@ def get_pcfich_cinit(ns, cell_id):
     return int((math.floor(ns / 2) + 1) * (2 * cell_id + 1) * (2 ** 9) + cell_id)
 
 
+# start @HavoK_at
+# The scrambling sequence is pseudo-random, created using a length-31 Gold sequence generator... -> 32
+def get_pcsch_scrambling_sequence(cell_id, ns, codeword_index):
+    cinit = get_pcsch_cinit(ns, cell_id, codeword_index)
+    return pn_generator(32, cinit)
+
+
+# https://de.mathworks.com/help/lte/ug/downlink-shared-channel.html#bt2d4io
+def get_pcsch_cinit(ns, cell_id, codeword_index):
+    SI_RNTI = 65535
+    return int((SI_RNTI * (2**14)) + (codeword_index * (2**13)) + (math.floor(ns/2) * 2**9 + cell_id))
+
+# end @HavoK_at
+
+
 def main():
     N_rb_dl = 6
     cell_id = 124
