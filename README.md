@@ -12,6 +12,10 @@ This project aims to provide a modular environment for an LTE downlink receiver.
 The block design aims to be modular and reusable. Where possible GR blocks are used.<br>
 Furthermore message ports are used for configuration on runtime. This is supposed to make the control flow visible to users and thus better understandable.
 
+The Idea contd.
+-------------
+This fork aims to add the decoding of the PDSCH / DL-SCH Channel to provide additional system information (SIB). 
+
 Publications
 -------------
 This is a list of related publications for further reference.
